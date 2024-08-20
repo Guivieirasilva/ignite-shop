@@ -1,15 +1,16 @@
 import { styled } from "..";
 
 export const Card = styled("div", {
-  display: "flex",
-  gap: 10,
   width: "100%",
-  margin: '24px 0'
+  display: "flex",
+  alignItems: "center",
+  gap: 20,
+  margin: "12px 0",
 });
 
 export const ImageCard = styled("div", {
-  width: '101px',
-  height: '94px',
+  width: "101px",
+  height: "94px",
   background: "linear-gradient(180deg, #1ea483 0%, #7465d4 100%)",
   borderRadius: 8,
   padding: "0.25rem",
@@ -24,23 +25,22 @@ export const ImageCard = styled("div", {
 });
 
 export const InfoProduct = styled("div", {
-  width: "100%",
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
   fontSize: "$lg",
-  gap:'10px',
+  gap: "10px",
 
   button: {
-    marginTop: '5px',
+    marginTop: "5px",
     border: 0,
-    background: 'transparent',
-    fontSize: '$md',
-    color: '$green500',
-    cursor: 'pointer',
+    background: "transparent",
+    fontSize: "$md",
+    color: "$green500",
+    cursor: "pointer",
 
-    '&:hover': {
-      opacity: 0.8
-    }
-  }
+    "&:hover": {
+      opacity: 0.8,
+    },
+  },
 });

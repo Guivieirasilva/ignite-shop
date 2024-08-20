@@ -13,6 +13,7 @@ export function CardProduct() {
       <ImageCard>
         <Image src={camiseta} width={94} height={94} alt="" />
       </ImageCard>
+      
       <InfoProduct>
         <span>Camiseta X</span>
         <strong>R$ 19,90</strong>

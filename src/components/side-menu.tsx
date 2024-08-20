@@ -1,7 +1,5 @@
 import { X } from "@phosphor-icons/react";
 
-import camiseta from "../assets/camisetas/1.png";
-import Image from "next/image";
 import { MenuContainer, Wrapper } from "../styles/components/side-menu";
 import { CardProduct } from "./card-product";
 import { Button } from "../styles/pages/app";
@@ -16,10 +14,9 @@ export function SideMenu() {
         <CardProduct />
         <CardProduct />
         <CardProduct />
-  
+        <CardProduct />
       </Wrapper>
       <footer>
-
         <div>
           <p>
             <span>Quantidade </span>3 itens

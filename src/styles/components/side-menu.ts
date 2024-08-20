@@ -47,12 +47,13 @@ export const MenuContainer = styled("div", {
 
 export const Wrapper = styled("div", {
   width: "100%",
+  overflowY: "auto",
 
   display: "flex",
   flexDirection: "column",
   gap: 10,
 
   h3: {
-    fontSize: "$lg",
+    fontSize: "$xl",
   },
 });
