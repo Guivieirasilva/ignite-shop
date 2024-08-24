@@ -23,15 +23,23 @@ export default function Success({ customerName, product }: SuccessProps) {
         <meta name="robots" content="noindex" />
       </Head>
       <SuccessContainer>
+        <div>
+          <ImageContainer>
+            <Image src={product.imageUrl} width={120} height={120} alt="" />
+          </ImageContainer>
+          <ImageContainer>
+            <Image src={product.imageUrl} width={120} height={120} alt="" />
+          </ImageContainer>
+        </div>
+
         <h1>Compra Efetuada!</h1>
-        <ImageContainer>
-          <Image src={product.imageUrl} width={120} height={110} alt="" />
-        </ImageContainer>
+
         <p>
-          Uhhuul, <strong>{customerName}</strong> sua Camiseta{" "}
-          <strong>{product.name}</strong>já está a caminho da sua casa
+          Uhu! <strong>{customerName}</strong>, seu pedido já está a caminho da
+          sua casa.
         </p>
-        <Link href={"/"}>Voltar ao catálogo</Link>
+
+        <Link href="/">Voltar ao catálogo</Link>
       </SuccessContainer>
     </>
   );
@@ -55,8 +63,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const customerName = session.customer_details.name;
   const product = session.line_items.data[0].price.product as Stripe.Product;
-
-  console.log(product);
 
   return {
     props: {
