@@ -5,7 +5,9 @@ export const HomeContainer = styled("main", {
   width: "100%",
   maxWidth: "calc(100vw - ((100vw - 1080px) / 2))",
   marginLeft: "auto",
-  minHeight: "656px",
+  marginTop: 'auto',
+  marginBottom: 'auto',
+  minHeight: "565px",
 });
 
 export const Product = styled("div", {
@@ -40,14 +42,35 @@ export const Product = styled("div", {
     opacity: 0,
     transition: "all 0.2s ease-in-out",
 
-    strong: {
-      fontSize: "$lg",
-      color: "$gray100",
+    div: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 5,
+      strong: {
+        fontSize: "$lg",
+        color: "$gray100",
+      },
+      span: {
+        fontSize: "$xl",
+        fontWeight: "bold",
+        color: "$green300",
+      },
     },
-    span: {
-      fontSize: "$xl",
-      fontWeight: "bold",
-      color: "$gray300",
+
+    button: {
+      background: "$green500",
+      border: 0,
+      borderRadius: "8px",
+      padding: "12px",
+      cursor: "pointer",
+
+      svg: {
+        color: "$white",
+      },
+
+      "&:hover": {
+        opacity: 0.8,
+      },
     },
   },
 
