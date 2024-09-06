@@ -35,7 +35,6 @@ export const Product = styled("div", {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-
     backgroundColor: "rgba(0, 0, 0, 0.6)",
 
     transform: "translateY(110%)",
@@ -58,6 +57,7 @@ export const Product = styled("div", {
     },
 
     button: {
+      zIndex: 1000,
       background: "$green500",
       border: 0,
       borderRadius: "8px",

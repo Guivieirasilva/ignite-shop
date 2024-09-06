@@ -43,30 +43,47 @@ export const ProductDetails = styled("div", {
   },
 
   p: {
-    marginTop: '2.5rem',
-    fontSize: '$md',
+    marginTop: "2.5rem",
+    fontSize: "$md",
     lineHeight: 1.6,
     color: "$gray300",
   },
 
-  button: {
-    marginTop: 'auto',
-    backgroundColor:'$green500',
-    border: 0,
-    color: '$white',
-    borderRadius: 8,
-    padding: '1.25rem',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    fontSize: 'medium',
+  div: {
+    marginTop: "auto",
+    alignSelf: "flex-end",
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    gap: "1rem",
+  },
 
-    '&:hover': {
-      backgroundColor:'$green300',
+  button: {
+    backgroundColor: "$green500",
+    border: 0,
+    color: "$white",
+    borderRadius: 8,
+    padding: "1.25rem",
+    cursor: "pointer",
+    fontWeight: "bold",
+    fontSize: "medium",
+
+    "&:hover": {
+      backgroundColor: "$green300",
     },
 
-    '&:not(:disabled):disabled': {
+    "&:not(:disabled):disabled": {
       opacity: 0.6,
-      cursor: 'not-allowed'
+      cursor: "not-allowed",
+    },
+  },
+
+  "button.add_cart": {
+    color: "$green500",
+    background: "transparent",
+
+    '&:hover': {
+      opacity: 0.8
     }
-  }
+  },
 });

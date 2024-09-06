@@ -47,6 +47,15 @@ export const CartContent = styled(Dialog.Content, {
   boxShadow: "-4px 0px 30px rgba(0, 0, 0, 0.8)",
   color: "$gray100",
   animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
+
+  '.empty':{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:'center',
+    fontWeight: 700,
+    fontSize: '$lg'
+  }
+
 });
 
 export const CartClose = styled(Dialog.Close, {
