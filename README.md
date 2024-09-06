@@ -63,4 +63,6 @@ npm run dev
 
 O projeto estará disponível em `http://localhost:3000`.
 
+## 📷 Imagens do Projeto
+
 ![Ignite Shop preview](./src/assets/fotos-projeto.png)
