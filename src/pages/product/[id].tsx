@@ -10,21 +10,36 @@ import Stripe from "stripe";
 import Image from "next/image";
 
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Head from "next/head";
+import { CartContext } from "../../context/CartProvider";
+import { formatPrice } from "../../helpers/formatPrice";
 
 interface ProductProps {
   product: {
     id: string;
     name: string;
     imageURL: string;
-    price: string;
+    price: number;
     description: string;
     defaultPriceId: string;
   };
 }
 
 export default function Product({ product }: ProductProps) {
+  const { addItem } = useContext(CartContext);
+
+  function handleAddItem() {
+    addItem({
+      id: product.id,
+      name: product.name,
+      imageURL: product.imageURL,
+      priceId: product.defaultPriceId,
+      unitAmount: product.price,
+    });
+    
+  }
+
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false);
 
@@ -55,15 +70,22 @@ export default function Product({ product }: ProductProps) {
         </ImageContainer>
         <ProductDetails>
           <h1>{product.name}</h1>
-          <span>{product.price}</span>
+          <span>
+            {formatPrice(product.price)}
+          </span>
           <p>{product.description}</p>
 
-          <button
-            disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
-          >
-            Comprar Agora
-          </button>
+          <div>
+            <button
+              disabled={isCreatingCheckoutSession}
+              onClick={handleBuyProduct}
+            >
+              Comprar Agora
+            </button>
+            <button className="add_cart" onClick={handleAddItem}>
+              Adicionar ao Carrinho
+            </button>
+          </div>
         </ProductDetails>
       </ProductContainer>
     </>
@@ -92,7 +114,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
     expand: ["default_price"],
   });
 
-  const price = product.default_price as Stripe.Price;
+  const price = product.default_price as Stripe.Price
 
   return {
     props: {
@@ -100,10 +122,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         id: product.id,
         name: product.name,
         imageURL: product.images[0],
-        price: new Intl.NumberFormat("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        }).format(price.unit_amount / 100),
+        price: price.unit_amount,
         description: product.description,
         defaultPriceId: price.id,
       },
