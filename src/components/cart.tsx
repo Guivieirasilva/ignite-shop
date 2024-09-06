@@ -11,14 +11,54 @@ import {
 } from "../styles/components/cart";
 import { Handbag, X } from "@phosphor-icons/react";
 import Image from "next/image";
-import camiseta from "../assets/camisetas/1.png";
 import { Button } from "../styles/pages/app";
+import { useContext, useState } from "react";
+import { CartContext } from "../context/CartProvider";
+import { formatPrice } from "../helpers/formatPrice";
+import empty from "../assets/carrinho-vazio.png";
+import axios from "axios";
 
 export function Cart() {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
+  const { items, removeItem } = useContext(CartContext);
+
+  const totalPrice = items.reduce((acc, item) => {
+    return (acc += item.unitAmount);
+  }, 0);
+
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true);
+
+      const lineItems = items.map((item) => {
+        return {
+          price: item.priceId,
+          quantity: 1,
+        };
+      });
+
+      
+      const response = await axios.post("/api/checkout", {
+          lineItems,
+        });
+        
+        console.log("response",response)
+
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl;
+
+    } catch (err) {
+      setIsCreatingCheckoutSession(false);
+      alert("falha ao redirecionar ao checkout");
+    }
+  }
+
   return (
     <Dialog.Root>
       <CartTrigger>
-        <span>5</span>
+        {items.length > 0 && <span>{items.length}</span>}
         <Handbag size={24} weight="bold" />
       </CartTrigger>
 
@@ -31,41 +71,59 @@ export function Cart() {
           <ContentContainer>
             <CartTitle>Sacola de Compras</CartTitle>
 
-            <section>
-              <CartProduct>
-                <ImageContainer>
-                  <Image src={camiseta} alt="" width={102} height={102} />
-                </ImageContainer>
+            {items.length > 0 ? (
+              <section>
+                {items.map((item) => (
+                  <CartProduct key={item.priceId}>
+                    <ImageContainer>
+                      <Image
+                        src={item.imageURL}
+                        alt=""
+                        width={102}
+                        height={102}
+                      />
+                    </ImageContainer>
 
-                <div>
-                  <span>Lorem Ipsulom</span>
-                  <strong>R$ 10, 00</strong>
-                  <button>Remover</button>
-                </div>
-              </CartProduct>
-            </section>
+                    <div>
+                      <span>{item.name}</span>
+                      <strong>{formatPrice(item.unitAmount)}</strong>
+                      <button onClick={() => removeItem(item.priceId)}>
+                        Remover
+                      </button>
+                    </div>
+                  </CartProduct>
+                ))}
+              </section>
+            ) : (
+              <section className="empty">
+                <Image src={empty} alt="" width={320} height={320} />
+                <p>Não há produtos selecionados!</p>
+              </section>
+            )}
           </ContentContainer>
 
-          <TotalsContainer>
-            <section>
-              <div>
-                <span>Quantidade</span>
-                <span>8 item(s)</span>
-              </div>
+          {items.length > 0 && (
+            <TotalsContainer>
+              <section>
+                <div>
+                  <span>Quantidade</span>
+                  <span>{items.length} item(s)</span>
+                </div>
 
-              <div>
-                <strong>Valor Total</strong>
-                <strong>R$ 10,00</strong>
-              </div>
-            </section>
+                <div>
+                  <strong>Valor Total</strong>
+                  <strong>{formatPrice(totalPrice)}</strong>
+                </div>
+              </section>
 
-            <Button
-            // disabled={isCreatingCheckoutSession}
-            // onClick={handleBuyProduct}
-            >
-              Finalizar compra
-            </Button>
-          </TotalsContainer>
+              <Button
+                disabled={isCreatingCheckoutSession}
+                onClick={handleBuyProduct}
+              >
+                Finalizar compra
+              </Button>
+            </TotalsContainer>
+          )}
         </CartContent>
       </Dialog.Portal>
     </Dialog.Root>
